@@ -1,0 +1,28 @@
+{
+  "name": "moodmusic",
+  "version": "1.0.0",
+  "description": "Turn your mood into music.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zfisch/moodmusic.git"
+  },
+  "keywords": [
+    "mood",
+    "music",
+    "sentiment",
+    "analysis"
+  ],
+  "author": "Zack Fischmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zfisch/moodmusic/issues"
+  },
+  "homepage": "https://github.com/zfisch/moodmusic#readme",
+  "dependencies": {
+    "express": "^4.12.3"
+  }
+}
