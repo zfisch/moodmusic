@@ -1,4 +1,6 @@
 var express = require('express');
+var sentiment = require('sentiment');
+
 var app = express();
 
 app.use(express.static('public'));

@@ -10,7 +10,7 @@ if (contextClass) {
   alert('Web audio is not supported in this browser, please try another browser, or just save some time and use Google Chrome');
 }
 
-
+//generate frequencies for each note
 var frequencies = {
   a: 440.00,
   bb: 466.16,
@@ -24,6 +24,14 @@ var frequencies = {
   gb: 739.99,
   g: 783.99,
   ab: 830.61
+}
+
+//create library of chords to play
+var chords = {
+  cMaj: ['c', 'e', 'g'],
+  fMaj: ['f', 'a', 'c'],
+  gMaj: ['g', 'b', 'd'],
+  aMin: ['a', 'c', 'e']
 }
 
 //set default pan for manipulation in play

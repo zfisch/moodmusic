@@ -53,6 +53,19 @@ $(document).ready(function() {
     }
   }
 
+  //choose chords based on sentiment of each word in a string
+  //TODO: make this depend on the sentiment
+  var generateChord = function(word){
+    var words = word.split(' ');
+    var word = words[words.length-1];
+    for(var i=0; i<chords.cMaj.length; i++){
+      playSound(chords.cMaj[i]);
+    }
+  }
+
+  //Choose the next chord based on the previous chords
+  
+  //
 
 
   //======================================//
@@ -63,7 +76,11 @@ $(document).ready(function() {
 
   $('.tunes').keypress(function(e){
     var key = e.which;
-    hashAndPlay(key);
+    // hashAndPlay(key);
+    if(key === 32){
+      console.log($('.tunes').val());
+      generateChord($('.tunes').val());
+    }
   });
 
 
