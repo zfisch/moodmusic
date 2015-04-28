@@ -168,12 +168,8 @@ module.exports = function(obj) {
 },{}],5:[function(require,module,exports){
 var sentiment = require('sentiment');
 
-var analyzeWord = function(str){
-  var words = str.split(' ');
-  var word = words[words.length-1];
-  //TODO: Set up sentiments here!
-  var result = sentiment(word);
-  return result;
+var analyzeSentiment = function(str){
+  return sentiment(str);
 }
-window.analyzeWord = analyzeWord;
+window.analyzeSentiment = analyzeSentiment;
 },{"sentiment":3}]},{},[5]);

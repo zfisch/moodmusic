@@ -28,30 +28,35 @@ var frequencies = {
 
 //create library of chords to play
 var happyChords = {
-  cMaj: ['c', 'e', 'g'],
-  fMaj: ['f', 'a', 'c'],
-  gMaj: ['g', 'b', 'd'],
-  g7: ['g', 'b', 'd', 'f'],
-  cMaj7: ['c', 'e', 'g', 'b'],
-  c6: ['c', 'e', 'g', 'a'],
-  a7: ['a', 'db', 'e', 'g'],
-  g13: ['g', 'b', 'd', 'f', 'a', 'c', 'e'],
+  cMaj: ['c', 'e', 'g', 'c', 'e'],
+  fMaj: ['f', 'a', 'c', 'f', 'a'],
+  gMaj: ['g', 'b', 'd', 'g', 'b'],
+  // g7: ['g', 'b', 'd', 'f', 'g'],
+}
+
+var neutralChords = {
+  cMaj7: ['c', 'e', 'g', 'b', 'c'],
+  c6: ['c', 'e', 'g', 'a', 'c'],
+  a7: ['a', 'db', 'e', 'g', 'a'],
+  g13: ['g', 'b', 'd', 'f', 'a', 'c'],
   c69: ['c', 'e', 'g', 'a', 'd']
 }
 
 var sadChords = {
-  aMin: ['a', 'c', 'e'],
-  dMin7: ['d', 'f', 'a', 'c'],
-  aMin7: ['a', 'c', 'e', 'g'],
-  eMin7: ['e', 'g', 'b', 'd'],
-  dMin9: ['d', 'f', 'a', 'c', 'e']
+  aMin: ['a', 'c', 'e', 'a', 'c'],
+  dMin7: ['d', 'f', 'a', 'c', 'd'],
+  aMin7: ['a', 'c', 'e', 'g', 'a'],
+  eMin7: ['e', 'g', 'b', 'd', 'e'],
+  dMin9: ['d', 'f', 'a', 'c', 'e'],
+  gDim: ['g', 'bb', 'db', 'g', 'db'],
+  fMin: ['f', 'ab', 'c', 'f', 'ab']
 }
 
 //set default pan for manipulation in play
 var pan = 1;
 
 var play = function(note) {
-
+  
   var oscillator = context.createOscillator();
   oscillator.frequency.value = frequencies[note];
   oscillator.type = oscillator.SINE;
@@ -73,8 +78,7 @@ var play = function(note) {
   synthDelay.delayTime.value = Math.floor(Math.random() * 1);
 
   var gainNode = context.createGain();
-  gainNode.gain.value = 0.1;
-  gainNode.gain.linearRampToValueAtTime(0.01, context.currentTime + 3); //'gain' is the AudioParam
+  gainNode.gain.value = 0.05;
 
   var analyser = context.createAnalyser();
 
@@ -86,10 +90,6 @@ var play = function(note) {
   compressor.connect(analyser);
   compressor.connect(context.destination);
   oscillator.start();
-  
-  if(nowPlaying.length > 3){
-    nowPlaying.shift();
-  }
 
   analyser.fftSize = 2048;
   var bufferLength = analyser.frequencyBinCount;
@@ -99,11 +99,12 @@ var play = function(note) {
 
   nowPlaying.push(oscillator);
   console.log(nowPlaying);
-
 }
 
 //sounds currently playing
 var nowPlaying = [];
+var chordQueue = [happyChords.cMaj];
+var chordProgression = [];
 
 
 

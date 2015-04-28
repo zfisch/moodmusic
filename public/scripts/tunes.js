@@ -5,10 +5,6 @@ $(document).ready(function() {
   //            CONFIGURATION             //
   //======================================//
 
-
-  //create object to store all key bindings
-  var hash = {};
-
   var notes = {
     1: 'a',
     2: 'bb',
@@ -24,56 +20,36 @@ $(document).ready(function() {
     12: 'ab'
   };
 
-  //custom hashing function
-  var hashKey = function(key){
-    if(!hash[key]){
-      var rand = Math.ceil( Math.random() * Object.keys(notes).length );
-      hash[key] = rand;
-    }
-  };
-
-
 
   //======================================//
   //          HELPER FUNCTIONS            //
   //======================================//
 
-
-
-  var playSound = function(note){
-    play(note);
-  }
-
-  var hashAndPlay = function(key){
-    if((key<123 && key>96) || (key<90 && key>65)){
-      hashKey(key);
-      playSound(notes[hash[key]]);
-    }
-  }
-
-  //choose chords based on sentiment of each word in a string
-  // var analyzeWord = function(str){
-  //   var words = str.split(' ');
-  //   var word = words[words.length-1];
-  //   //TODO: Set up sentiments here!
-  //   generateChord(sentiment(word));
-  // }
-  // 
-  
-
-  //TODO: make this depend on the sentiment
   var generateChord = function(val){
-    //TODO: design logic for picking next chord based on sentiment and previous chords
     var happyOrSad = happyChords;
     if(val<0){
       happyOrSad = sadChords;
     }
     var rand = Math.floor(Math.random() * Object.keys(happyOrSad).length);
     var chord = Object.keys(happyOrSad)[rand];
-    for(var i=0; i<happyOrSad[chord].length; i++){
-      playSound(happyOrSad[chord][i]);
-    }
+    chordQueue.unshift(happyOrSad[chord]);
+    chordProgression.push(happyOrSad[chord]);
   }
+
+
+  var updateChord = function(){
+    setInterval(function(){
+      if(chordQueue.length >0){
+        nextChord = chordQueue.pop()
+      } else {
+        nextChord = chordProgression[0];
+        chordProgression.push(chordProgression.shift());
+      }
+      for (var i=0; i<nowPlaying.length; i++){
+        nowPlaying[i].frequency.value = frequencies[nextChord[i]];
+      }
+    }, 2000);
+  };
 
 
   //======================================//
@@ -81,13 +57,27 @@ $(document).ready(function() {
   //======================================//
 
 
+  var counter = 0;
+  var progressionInProgress = false;
 
   $('.tunes').keypress(function(e){
     var key = e.which;
-    console.log('key', key)
-    // hashAndPlay(key);
-    if(key === 32 || key === 46 || key === 188){
-      generateChord(analyzeWord($('.tunes').val()).score);
+    if((key<123 && key>96) || (key<90 && key>65)){
+      if(counter < 5){
+        var note = happyChords.cMaj[counter];
+        counter++;
+        play(note);
+      } else {
+        if(!progressionInProgress){
+          progressionInProgress = true;
+          updateChord();
+        }
+
+      }
+    } else {
+      if(key === 32 || key === 46 || key === 188){
+        generateChord(analyzeSentiment($('.tunes').val()).score);
+      }
     }
   });
 
