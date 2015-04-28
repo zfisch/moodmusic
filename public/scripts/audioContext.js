@@ -53,7 +53,7 @@ var sadChords = {
   aMin: ['a', 'c', 'e', 'a', 'c'],
   dMin: ['d', 'f', 'a', 'f', 'd'],
   eMin: ['e', 'g', 'b', 'b', 'g'],
-  bDim: ['b', 'd', 'f']
+  bDim: ['b', 'd', 'f', 'd', 'b']
 }
 
 //set default pan for manipulation in play
