@@ -1,5 +1,3 @@
-// var audioCtx = require('./audioContext.js');
-
 $(document).ready(function() {
 
   
@@ -54,18 +52,28 @@ $(document).ready(function() {
   }
 
   //choose chords based on sentiment of each word in a string
+  // var analyzeWord = function(str){
+  //   var words = str.split(' ');
+  //   var word = words[words.length-1];
+  //   //TODO: Set up sentiments here!
+  //   generateChord(sentiment(word));
+  // }
+  // 
+  
+
   //TODO: make this depend on the sentiment
-  var generateChord = function(word){
-    var words = word.split(' ');
-    var word = words[words.length-1];
-    for(var i=0; i<chords.cMaj.length; i++){
-      playSound(chords.cMaj[i]);
+  var generateChord = function(val){
+    //TODO: design logic for picking next chord based on sentiment and previous chords
+    var happyOrSad = happyChords;
+    if(val<0){
+      happyOrSad = sadChords;
+    }
+    var rand = Math.floor(Math.random() * Object.keys(happyOrSad).length);
+    var chord = Object.keys(happyOrSad)[rand];
+    for(var i=0; i<happyOrSad[chord].length; i++){
+      playSound(happyOrSad[chord][i]);
     }
   }
-
-  //Choose the next chord based on the previous chords
-  
-  //
 
 
   //======================================//
@@ -76,10 +84,10 @@ $(document).ready(function() {
 
   $('.tunes').keypress(function(e){
     var key = e.which;
+    console.log('key', key)
     // hashAndPlay(key);
-    if(key === 32){
-      console.log($('.tunes').val());
-      generateChord($('.tunes').val());
+    if(key === 32 || key === 46 || key === 188){
+      generateChord(analyzeWord($('.tunes').val()).score);
     }
   });
 

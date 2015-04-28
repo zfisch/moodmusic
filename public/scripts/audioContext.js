@@ -27,11 +27,24 @@ var frequencies = {
 }
 
 //create library of chords to play
-var chords = {
+var happyChords = {
   cMaj: ['c', 'e', 'g'],
   fMaj: ['f', 'a', 'c'],
   gMaj: ['g', 'b', 'd'],
-  aMin: ['a', 'c', 'e']
+  g7: ['g', 'b', 'd', 'f'],
+  cMaj7: ['c', 'e', 'g', 'b'],
+  c6: ['c', 'e', 'g', 'a'],
+  a7: ['a', 'db', 'e', 'g'],
+  g13: ['g', 'b', 'd', 'f', 'a', 'c', 'e'],
+  c69: ['c', 'e', 'g', 'a', 'd']
+}
+
+var sadChords = {
+  aMin: ['a', 'c', 'e'],
+  dMin7: ['d', 'f', 'a', 'c'],
+  aMin7: ['a', 'c', 'e', 'g'],
+  eMin7: ['e', 'g', 'b', 'd'],
+  dMin9: ['d', 'f', 'a', 'c', 'e']
 }
 
 //set default pan for manipulation in play
@@ -60,6 +73,7 @@ var play = function(note) {
   synthDelay.delayTime.value = Math.floor(Math.random() * 1);
 
   var gainNode = context.createGain();
+  gainNode.gain.value = 0.1;
   gainNode.gain.linearRampToValueAtTime(0.01, context.currentTime + 3); //'gain' is the AudioParam
 
   var analyser = context.createAnalyser();
