@@ -31,25 +31,29 @@ var happyChords = {
   cMaj: ['c', 'e', 'g', 'c', 'e'],
   fMaj: ['f', 'a', 'c', 'f', 'a'],
   gMaj: ['g', 'b', 'd', 'g', 'b'],
-  // g7: ['g', 'b', 'd', 'f', 'g'],
 }
 
 var neutralChords = {
+  g7: ['g', 'b', 'd', 'f', 'g'],
   cMaj7: ['c', 'e', 'g', 'b', 'c'],
   c6: ['c', 'e', 'g', 'a', 'c'],
   a7: ['a', 'db', 'e', 'g', 'a'],
-  g13: ['g', 'b', 'd', 'f', 'a', 'c'],
-  c69: ['c', 'e', 'g', 'a', 'd']
-}
-
-var sadChords = {
-  aMin: ['a', 'c', 'e', 'a', 'c'],
+  g13: ['g', 'b', 'd', 'f', 'a'],
+  c69: ['c', 'e', 'g', 'a', 'd'],
   dMin7: ['d', 'f', 'a', 'c', 'd'],
   aMin7: ['a', 'c', 'e', 'g', 'a'],
   eMin7: ['e', 'g', 'b', 'd', 'e'],
   dMin9: ['d', 'f', 'a', 'c', 'e'],
   gDim: ['g', 'bb', 'db', 'g', 'db'],
   fMin: ['f', 'ab', 'c', 'f', 'ab']
+
+}
+
+var sadChords = {
+  aMin: ['a', 'c', 'e', 'a', 'c'],
+  dMin: ['d', 'f', 'a', 'f', 'd'],
+  eMin: ['e', 'g', 'b', 'b', 'g'],
+  bDim: ['b', 'd', 'f']
 }
 
 //set default pan for manipulation in play

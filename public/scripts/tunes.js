@@ -34,6 +34,9 @@ $(document).ready(function() {
     var chord = Object.keys(happyOrSad)[rand];
     chordQueue.unshift(happyOrSad[chord]);
     chordProgression.push(happyOrSad[chord]);
+    if (chordProgression.length > 4){
+      chordProgression.shift();
+    }
   }
 
 
