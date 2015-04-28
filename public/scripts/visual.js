@@ -24,25 +24,25 @@ var updateColor = function(sentimentScore){
   
   if(sentimentScore <= -10){
     currentSentiment = 0;
-  } else if (sentimentScore <= -7){
+  } else if (sentimentScore <= -4){
     currentSentiment = 1;
-  } else if (sentimentScore <= -5){
-    currentSentiment = 2;
   } else if (sentimentScore <= -3){
+    currentSentiment = 2;
+  } else if (sentimentScore <= -2){
     currentSentiment = 3;
   } else if (sentimentScore <= -1){
     currentSentiment = 4;
   } else if (sentimentScore === 0){
     currentSentiment = 5;
-  } else if (sentimentScore <= 3){
+  } else if (sentimentScore <= 1){
     currentSentiment = 6;
-  } else if (sentimentScore <= 5){
+  } else if (sentimentScore <= 2){
     currentSentiment = 7;
-  } else if (sentimentScore <= 8){
+  } else if (sentimentScore <= 3){
     currentSentiment = 8;
-  } else if (sentimentScore <= 10){
+  } else if (sentimentScore <= 4){
     currentSentiment = 9;
-  } else if (sentimentScore > 10){
+  } else if (sentimentScore > 5){
     currentSentiment = 10;
   }
 
