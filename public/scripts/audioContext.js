@@ -1,16 +1,8 @@
-var contextClass = (window.AudioContext || 
-  window.webkitAudioContext || 
-  window.mozAudioContext || 
-  window.oAudioContext || 
-  window.msAudioContext);
 
-if (contextClass) {
-  var context = new contextClass();
-} else {
-  alert('Web audio is not supported in this browser, please try another browser, or just save some time and use Google Chrome');
-}
+//======================================//
+//            CONFIGURATION             //
+//======================================//
 
-//generate frequencies for each note
 var frequencies = {
   a: 440.00,
   bb: 466.16,
@@ -26,13 +18,13 @@ var frequencies = {
   ab: 830.61
 }
 
-//create library of chords to play
 var happyChords = {
   cMaj: ['c', 'e', 'g', 'c', 'e'],
   fMaj: ['f', 'a', 'c', 'f', 'a'],
   gMaj: ['g', 'b', 'd', 'g', 'b'],
 }
 
+//These are not currently in use.
 var neutralChords = {
   g7: ['g', 'b', 'd', 'f', 'g'],
   cMaj7: ['c', 'e', 'g', 'b', 'c'],
@@ -56,13 +48,35 @@ var sadChords = {
   bDim: ['b', 'd', 'f', 'd', 'b']
 }
 
+
+//======================================//
+//           AUDIO CONTEXTS             //
+//======================================//
+
+
+var contextClass = (window.AudioContext || 
+  window.webkitAudioContext || 
+  window.mozAudioContext || 
+  window.oAudioContext || 
+  window.msAudioContext);
+
+if (contextClass) {
+  var context = new contextClass();
+} else {
+  alert('Web audio is not supported in this browser, please try another browser, or just save some time and use Google Chrome');
+}
+
 //set default pan for manipulation in play
 var pan = 1;
 
-var play = function(note) {
+var findFrequency = function(note){
+  return frequencies[note];
+}
+
+var play = function(freq) {
   
   var oscillator = context.createOscillator();
-  oscillator.frequency.value = frequencies[note];
+  oscillator.frequency.value = freq;
   oscillator.type = oscillator.SINE;
   
   var compressor = context.createDynamicsCompressor();
@@ -84,28 +98,61 @@ var play = function(note) {
   var gainNode = context.createGain();
   gainNode.gain.value = 0.05;
 
-  var analyser = context.createAnalyser();
-
 
   oscillator.connect(panNode);
   panNode.connect(synthDelay);
   synthDelay.connect(gainNode);
   gainNode.connect(compressor);
-  compressor.connect(analyser);
+  
   compressor.connect(context.destination);
   oscillator.start();
-
-  analyser.fftSize = 2048;
-  var bufferLength = analyser.frequencyBinCount;
-  var dataArray = new Uint8Array(bufferLength);
-  analyser.getByteTimeDomainData(dataArray);
-  console.log(analyser);
 
   nowPlaying.push(oscillator);
   console.log(nowPlaying);
 }
 
-//sounds currently playing
+//DISTORTION NEEDS LOVE TO WORK
+
+// var addDistortion = function(tone){
+
+//   var distortion = context.createWaveShaper();
+
+//   function makeDistortionCurve(amount) {
+//     var k = typeof amount === 'number' ? amount : 50,
+//       n_samples = 44100,
+//       curve = new Float32Array(n_samples),
+//       deg = Math.PI / 180,
+//       i = 0,
+//       x;
+//     for ( ; i < n_samples; ++i ) {
+//       x = i * 2 / n_samples - 1;
+//       curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+//     }
+//     return curve;
+//   };
+
+//   distortion.curve = makeDistortionCurve(800);
+//   distortion.oversample = '10x';
+
+//   var gainNode = context.createGain();
+//   gainNode.gain.value = 0.05;
+  
+//   tone.connect(distortion);
+//   distortion.connect(gainNode);
+//   gainNode.connect(context.destination);
+// }
+
+// var removeDistortion = function(tone){
+//   tone.disconnect();
+//   play(tone.frequency.value);
+// }
+
+
+//======================================//
+//                STATE                 //
+//======================================//
+
+
 var nowPlaying = [];
 var chordQueue = [happyChords.cMaj];
 var chordProgression = [];
