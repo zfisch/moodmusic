@@ -1,14 +1,15 @@
 
 body{
+  margin: 0 0 0 0;
   width: 100%;
-  background-color: #2d2e29;
+  background-color: #3B3738;
   transition: all 2s ease;
 }
 
 input {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15%;
+  margin-top: 8%;
   display: block;
   font-size: 2em;
   color: #eae0c2;
@@ -27,4 +28,43 @@ input {
   padding: 15px;
   background: rgba(255,255,255,0.5);
 }
+
+input[type="text"]:focus {
+  outline: none;
+  color: black;
+  opacity: 0.6;
+}
+
+::-webkit-input-placeholder {
+   color: black;
+   opacity: 0.6;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: black;
+   opacity: 0.6;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: black;
+   opacity: 0.6;  
+}
+
+:-ms-input-placeholder {  
+   color: black;
+   opacity: 0.6;  
+}
+
+
+img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#logo {
+  width: 100%;
+}
+
+
 
