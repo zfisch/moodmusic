@@ -28,3 +28,4 @@ node_modules
 
 # Custom ignore
 .DS_store
+Procfile
