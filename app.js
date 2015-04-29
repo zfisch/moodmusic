@@ -1,5 +1,5 @@
 var express = require('express');
-var sentiment = require('sentiment');
+// var sentiment = require('sentiment');
 
 var app = express();
 
