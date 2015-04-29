@@ -73,21 +73,18 @@ $(document).ready(function() {
     }
 
     var key = e.which;
+    console.log(key);
     if((key<123 && key>96) || (key<90 && key>65)){
       if(counter < 5){
         var note = happyChords.cMaj[counter];
         counter++;
         play(findFrequency(note));
-      } else {
-        if(!progressionInProgress){
-          progressionInProgress = true;
-          updateChord();
-        }
+      } else if(!progressionInProgress){
+        progressionInProgress = true;
+        updateChord();
       }
-    } else {
-      if(key === 32 || key === 46 || key === 188){
-        generateChord(sentimentScore);
-      }
+    } else if(key === 32 || key === 46 || key === 188 || key === 13 || key === 8){
+      generateChord(sentimentScore);
     }
   });
 
