@@ -23,9 +23,7 @@
   },
   "homepage": "https://github.com/zfisch/moodmusic#readme",
   "dependencies": {
-    "express": "^4.12.3"
-  },
-  "devDependencies": {
+    "express": "^4.12.3",
     "sentiment": "^1.0.2"
   }
 }
