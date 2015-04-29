@@ -67,8 +67,7 @@ $(document).ready(function() {
   $('.tunes').keypress(function(e){
 
     var sentimentScore = analyzeSentiment($('.tunes').val()).score;
-    console.log('current sentiment: ', currentSentiment);
-    console.log('sentiment score: ', sentimentScore);
+
     if (sentimentScore !== currentSentiment){
       updateColor(sentimentScore);
     }
