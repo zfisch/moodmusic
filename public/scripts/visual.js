@@ -22,7 +22,7 @@ var colors = {
 //changes bg color based on sentiment
 var updateColor = function(sentimentScore){
   
-  if(sentimentScore <= -10){
+  if(sentimentScore <= -5){
     currentSentiment = 0;
   } else if (sentimentScore <= -4){
     currentSentiment = 1;
