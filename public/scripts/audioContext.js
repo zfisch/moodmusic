@@ -74,10 +74,10 @@ var findFrequency = function(note){
 }
 
 var play = function(freq) {
-  
+
   var oscillator = context.createOscillator();
   oscillator.frequency.value = freq;
-  oscillator.type = oscillator.SINE;
+  oscillator.type = 'sine';
   
   var compressor = context.createDynamicsCompressor();
   compressor.threshold.value = -50;
@@ -87,25 +87,27 @@ var play = function(freq) {
   compressor.attack.value = 1;
   compressor.release.value = 0.25;
   
-
-  var panNode = context.createStereoPanner();
-  panNode.pan.value = Math.random() * pan;
-  pan = pan * -1;
-
   var synthDelay = context.createDelay(5.0);
   synthDelay.delayTime.value = Math.floor(Math.random() * 1);
 
   var gainNode = context.createGain();
   gainNode.gain.value = 0.05;
 
+  if(contextClass==="AudioContext" || contextClass ==="mozAudioContext"){
+    var panNode = context.createStereoPanner();
+    panNode.pan.value = Math.random() * pan;
+    pan = pan * -1;
+    oscillator.connect(panNode);
+    panNode.connect(synthDelay);
+  } else {
+    oscillator.connect(synthDelay);
+  }
 
-  oscillator.connect(panNode);
-  panNode.connect(synthDelay);
   synthDelay.connect(gainNode);
   gainNode.connect(compressor);
   
   compressor.connect(context.destination);
-  oscillator.start();
+  oscillator.start(0);
 
   nowPlaying.push(oscillator);
   console.log(nowPlaying);
