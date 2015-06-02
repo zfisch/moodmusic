@@ -51,7 +51,7 @@ $(document).ready(function() {
 
   var updateChord = function(){
     setInterval(function(){
-      if(chordQueue.length >0){
+      if(chordQueue.length > 0){
         nextChord = chordQueue.pop()
       } else {
         nextChord = chordProgression[0];
@@ -60,7 +60,6 @@ $(document).ready(function() {
       for (var i=0; i<nowPlaying.length; i++){
         nowPlaying[i].frequency.value = frequencies[nextChord[i]];
       }
-      console.log(analyzeSentiment($('.tunes').val()).score)
     }, 2000);
   };
 
@@ -73,12 +72,14 @@ $(document).ready(function() {
   var counter = 0;
   var progressionInProgress = false;
 
-  $('.tunes').keypress(function(e){
-
+  $('.tunes').keyup(function(e){
+    
     var sentimentScore = analyzeSentiment($('.tunes').val()).score;
+    console.log($('.tunes').val(), sentimentScore);
 
     if (sentimentScore !== currentSentiment){
       updateColor(sentimentScore);
+      generateChord(sentimentScore);
     }
 
     var key = e.which;
@@ -92,8 +93,6 @@ $(document).ready(function() {
         progressionInProgress = true;
         updateChord();
       }
-    } else if(key === 32 || key === 46 || key === 188 || key === 13 || key === 8){
-      generateChord(sentimentScore);
     }
   });
 
