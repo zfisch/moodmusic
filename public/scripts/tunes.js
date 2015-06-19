@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-  
   //======================================//
   //            CONFIGURATION             //
   //======================================//
@@ -34,30 +33,36 @@ $(document).ready(function() {
   //          HELPER FUNCTIONS            //
   //======================================//
 
-  var generateChord = function(val){
+  var generateChord = function(sentimentValue){
     var happyOrSad = happyChords;
-    if(val<0){
+    if (sentimentValue < 0){
       happyOrSad = sadChords;
     }
     var rand = Math.floor(Math.random() * Object.keys(happyOrSad).length);
     var chord = Object.keys(happyOrSad)[rand];
     chordQueue.unshift(happyOrSad[chord]);
     chordProgression.push(happyOrSad[chord]);
+
+    //Keep it at a consistent 4 chord progression
     if (chordProgression.length > 4){
       chordProgression.shift();
     }
+
+    console.log("Now Playing: ", nowPlaying);
+    console.log("Chord Queue: ", chordQueue);
+    console.log("Chord progression: ", chordProgression);
   }
 
 
   var updateChord = function(){
     setInterval(function(){
-      if(chordQueue.length > 0){
+      if (chordQueue.length > 0){
         nextChord = chordQueue.pop()
       } else {
         nextChord = chordProgression[0];
         chordProgression.push(chordProgression.shift());
       }
-      for (var i=0; i<nowPlaying.length; i++){
+      for (var i = 0; i < nowPlaying.length; i++){
         nowPlaying[i].frequency.value = frequencies[nextChord[i]];
       }
     }, 2000);
@@ -72,24 +77,26 @@ $(document).ready(function() {
   var counter = 0;
   var progressionInProgress = false;
 
+  //Every time a user types a key, check the sentiment of the message and generate the appropriate
+  //color and music.
   $('.tunes').keyup(function(e){
-    
-    var sentimentScore = analyzeSentiment($('.tunes').val()).score;
-    console.log($('.tunes').val(), sentimentScore);
 
-    if (sentimentScore !== currentSentiment){
-      updateColor(sentimentScore);
+    var key = e.which;
+    var sentimentScore = analyzeSentiment($('.tunes').val()).score;
+
+    updateColor(sentimentScore);
+
+    if (counter >= 5){
       generateChord(sentimentScore);
     }
 
-    var key = e.which;
-    console.log(key);
-    if((key<123 && key>96) || (key<90 && key>65)){
-      if(counter < 5){
+    //If the key pressed is a letter, play a note! If not, don't.
+    if ((key <= 123 && key >= 96) || (key <= 90 && key >= 65)){
+      if (counter < 5){
         var note = happyChords.cMaj[counter];
         counter++;
         play(findFrequency(note));
-      } else if(!progressionInProgress){
+      } else if (!progressionInProgress){
         progressionInProgress = true;
         updateChord();
       }

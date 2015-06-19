@@ -19,10 +19,10 @@ var colors = {
   10: '#eb14a3' //bright pink
 }
 
-//changes bg color based on sentiment
+//Changes background color based on sentiment
 var updateColor = function(sentimentScore){
-  
-  if(sentimentScore <= -5){
+
+  if (sentimentScore <= -5){
     currentSentiment = 0;
   } else if (sentimentScore <= -4){
     currentSentiment = 1;
@@ -47,6 +47,5 @@ var updateColor = function(sentimentScore){
   }
 
   $('body').css('backgroundColor', colors[currentSentiment]);
-
 
 }
